@@ -1,40 +1,80 @@
-# Base44 App — TanStack Start
+Lunar Survival Simulator
+An interactive lunar mission training platform designed to help students explore the challenges of living and working on the Moon through realistic, educational simulations powered by NASA data.
 
-A full-stack Base44 app: [TanStack Start](https://tanstack.com/start) (React 19, plain JavaScript) with file-based routes, server functions and server routes, server-rendered and hosted by Base44.
+About the Project
+Lunar Survival Simulator is an educational web application that puts students in the role of lunar mission explorers. Students complete a series of missions, make decisions, analyze environmental conditions, and learn how astronauts prepare for survival on the Moon.
 
-## What is in the starter
+The platform combines real NASA datasets with interactive scenarios to make space science more engaging and accessible.
 
-| Route | File |
-| --- | --- |
-| `/` | `src/routes/index.jsx` — a server-rendered page whose loader calls a server function |
-| `GET /api/time` | `src/routes/api/time.js` — a server route: a raw HTTP endpoint next to the pages |
+Key Features
+Seven-Mission Campaign: Complete at least seven distinct lunar survival missions.
+Progress Tracking: Track completed missions, achievements, and overall campaign progress.
+Interactive Simulations: Explore lunar challenges through decision-making scenarios.
+NASA Data Integration: Use real NASA datasets to support mission information and simulations.
+Learning Dashboard: Monitor student progress and mission performance.
+Educational Resources: Access guides, explanations, and a space science glossary.
+What-If Scenarios: Explore how different decisions and environmental conditions affect mission outcomes.
+How It Works
+Students begin with their first lunar survival mission.
+Each mission introduces a different challenge.
+Students analyze the available information and make decisions.
+The simulator presents outcomes and educational explanations.
+Completed missions are recorded on the dashboard.
+Students unlock subsequent missions and continue their campaign.
+Technology Stack
+Technology	Purpose
+Base44	Application development and hosting
+React 19	Frontend application
+TanStack Start	Full-stack framework and routing
+JavaScript	Application logic
+NASA APIs	Access to real NASA datasets
+JSON	Data handling and integration
+NASA Data
+The project incorporates NASA data to connect classroom learning with real space science.
 
-## Run locally
+NASA datasets provide information used to develop mission scenarios and help students understand the environmental challenges associated with lunar exploration.
 
-```bash
+Project Structure
+src/
+├── routes/
+│   ├── index.jsx
+│   ├── campaign.jsx
+│   ├── classroom.jsx
+│   ├── compare.jsx
+│   ├── demo.jsx
+│   ├── glossary.jsx
+│   ├── how-to-play.jsx
+│   ├── investigator.jsx
+│   ├── observatory.jsx
+│   ├── settings.jsx
+│   ├── training.jsx
+│   ├── whatif.jsx
+│   └── api/
+│       └── time.js
+Running Locally
+Install dependencies:
+
 npm ci
-base44 login   # one-time per machine
-base44 link    # one-time per clone
-base44 dev     # local backend + app together
-```
+Log in to Base44:
 
-## Build and publish
+base44 login
+Link the project:
 
-```bash
-npm run build         # -> dist/client (assets) + dist/server (the Worker)
-base44 deploy         # or publish from the Base44 builder
-```
+base44 link
+Start the development server:
 
-There is no `index.html`: the HTML document is rendered on the server from `src/routes/__root.jsx`. The build runs through the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), so dev and build both execute server code in `workerd`.
+base44 dev
+Building and Deployment
+Build the application:
 
-## How the pieces fit
+npm run build
+Deploy through Base44:
 
-- **Pages** are files in `src/routes/`. A route's `loader` runs on the server for a document request and in the browser for a client navigation; `Route.useLoaderData()` gives the component the resolved data.
-- **Server functions** (`src/lib/server-fns.js`) are RPCs created with `createServerFn`. `src/start.js` runs every one of them through `authMiddleware`, which sends the visitor's token along, so `context.getBase44()` returns a client acting as that visitor and entity access rules apply. `context.getBase44().asServiceRole` bypasses them, so use it only after authenticating the caller (`.middleware([requireUser])`) and checking they may access the records involved: server functions and server routes are public endpoints anyone can call with any input. See **Server Security** in `AGENTS.md`. Call it only in handlers that need Base44: it reads the platform headers, and a handler that never calls it works without them.
-- **Secrets** are read in server code with `import { secrets } from "base44:runtime"` → `secrets.get("NAME")`, inside a handler. Never `process.env`.
-- **Server routes** (`src/routes/api/*.js`) are raw HTTP endpoints for URLs something other than the app's own code requests (webhooks, downloads, feeds); the app's pages call server functions. `src/start.js` runs every request through `base44RequestMiddleware`, so their `server.handlers` receive the same `context.getBase44()` (`({ request, params, context }) => …`).
-- **Server-only code** lives in `*.server.js` files (TanStack refuses to bundle them for the browser).
-- **Auth** is resolved client-side after hydration (`useAuth()`); the server is anonymous on a document request, so give per-user pages `ssr: false`.
-- **Sign-in and gated pages** are not wired in the starter: `src/components/auth/` holds the pages (login, register, password reset, MCP consent) and a login gate for `src/routes/_authed/`, to add when the app needs them. See **Adding Authentication** in `AGENTS.md`.
-- **AI**: TanStack AI is installed and runs on the Base44 AI gateway, with no API key and usage billed to the app's AI credits. `gatewayModel(context.getBase44())` in `src/lib/ai.server.js` builds the adapter; `AGENTS.md` has a streaming chat example (a server route plus `useChat`).
-- **Caching**: the platform caches only what a route opts into via `headers()` (`Cache-Control: public, s-maxage=…`). Everything else is served fresh.
+base44 deploy
+Purpose
+The goal is to transform space science education from passive learning into an interactive experience where students can explore, experiment, make decisions, and understand the challenges of future lunar exploration.
+
+Challenge
+Developed for the NASA Space Apps Challenge 2026.
+
+Built with curiosity, code, and NASA data.
